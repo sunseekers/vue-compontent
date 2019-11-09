@@ -1,4 +1,5 @@
 <template>
+  <!--移动端滚动分页-->
   <div class="scroll" @scroll="onScroll($event)">
     <List :list="list" @goToDetail="goToDetail" />
     <p class="list-loading-status">{{ getLoadingState() }}</p>

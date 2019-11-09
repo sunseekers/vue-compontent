@@ -1,4 +1,5 @@
 <template>
+  <!--弹窗-->
   <div class="dialog-wrapper">
     <div class="dialog">
       <div class="title">评分</div>

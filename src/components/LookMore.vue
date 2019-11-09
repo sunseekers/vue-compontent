@@ -1,4 +1,5 @@
 <template>
+  <!--是否展示更多-->
   <div class="lookMore">
     <div class="detail" ref="detail">
       {{ content }}

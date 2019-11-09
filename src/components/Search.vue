@@ -1,4 +1,5 @@
 <template>
+  <!--前端列表搜索-->
   <div class="search-wrapper">
     <div class="search">
       <input v-model="searchWord" type="text" placeholder="搜索" />

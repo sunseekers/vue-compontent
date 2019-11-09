@@ -1,4 +1,5 @@
 <template>
+  <!--列表渲染-->
   <div class="list">
     <div
       class="item "
