@@ -1,0 +1,72 @@
+//  cube-dialog 修改样式
+.cube-dialog-main {
+  width: 296px;
+  background: #ffffff;
+  border-radius: 12px 12px;
+  .cube-dialog-title {
+    .cube-dialog-title-def {
+      margin-top: 20px;
+      font-size: 17px;
+      color: #262626;
+      font-weight: normal;
+      letter-spacing: -0.39px;
+    }
+  }
+  .cube-dialog-content {
+    margin-top: 16px;
+    margin-bottom: 30px;
+    .cube-dialog-content-def {
+      padding: 0 20px;
+      font-size: 14px;
+      color: #262626;
+      letter-spacing: -0.34px;
+    }
+  }
+  .cube-dialog-btns {
+    border-top: 1px solid #eeeeee;
+    .cube-dialog-btn {
+      text-align: center;
+      font-size: 14px;
+      color: #37ca7c;
+      letter-spacing: -0.39px;
+      border-right: 1px solid #eeeeee;
+      &:last-of-type {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+// 修改 Toast 样式
+.cube-toast {
+  .cube-popup-content {
+    padding: 10px 20px;
+    border-radius: 16px;
+    background: rgba(34, 34, 34, 0.9);
+    .cube-toast-tip {
+      font-size: 12px;
+      line-height: 1;
+      color: #ffffff;
+    }
+  }
+}
+
+.cube-picker-confirm {
+  color: #37ca7c;
+  font-size: 16px;
+}
+
+.cube-picker-cancel {
+  color: #37ca7c;
+  font-size: 16px;
+}
+
+.cube-picker-wheel-item {
+  color: #212121;
+  font-size: 18px;
+}
+
+.cube-picker-title {
+  color: #212121;
+  font-size: 16px;
+}
