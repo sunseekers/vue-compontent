@@ -1,73 +1,54 @@
 <template>
   <!--前端列表搜索-->
   <div class="search-wrapper">
+    <p>
+      <input type="radio" name="pay" id="pay0" value="0"> <label for="pay0">支付宝</label>
+    </p>
+    <p>
+      <input type="radio" name="pay" id="pay1" value="1" checked> <label for="pay1">微信</label>
+    </p>
+    <p>
+      <input type="radio" name="pay" id="pay2" value="2"> <label for="pay2">银行卡</label>
+    </p>
     <div class="search">
       <input v-model="searchWord" type="text" placeholder="搜索" />
       <span class="iconfont searcIcon">&#xe62b;</span>
     </div>
     <div class="content">
-      <div
+      <!-- <div
         v-if="!searchWord && showList.length"
         class="select-all"
         @click="selectAll"
-      >
+      > -->
+      <div class="select-all" @click="selectAll">
         <span>全选</span>
         <span v-html="allSelectIcon" class="iconfont empty-icon"></span>
       </div>
-      <div class="data-list" v-show="!searchWord && showList.length">
-        <div
-          class="grade"
-          @click="dropGrade(grade)"
-          v-for="(grade, index) in showList"
-          :key="index"
-        >
+      <div class="data-list">
+        <div class="grade" @click="dropGrade(grade)" v-for="(grade, index) in showList" :key="index">
           <div class="select-all">
-            <span
-              class="iconfont drop-icon"
-              v-html="
+            <span class="iconfont drop-icon" v-html="
                 dropedGrade.indexOf(grade.campusGradeId) > -1
                   ? '&#xe63f;'
                   : '&#xe6a1;'
-              "
-            ></span>
+              "></span>
             <span class="grade-name">{{ grade.campusGradeName }}</span>
-            <span
-              @click.stop="selectGrade(grade)"
-              v-html="gradeSelectIcon(grade)"
-              class="iconfont empty-icon"
-            ></span>
+            <span @click.stop="selectGrade(grade)" v-html="gradeSelectIcon(grade)" class="iconfont empty-icon"></span>
           </div>
-          <div
-            @click.stop="selectClass(classItem)"
-            class="item"
-            v-for="(classItem, index2) in grade.classList"
-            :key="index2"
-            v-show="dropedGrade.indexOf(grade.campusGradeId) > -1"
-          >
+          <div @click.stop="selectClass(classItem)" class="item" v-for="(classItem, index2) in grade.classList" :key="index2" v-show="dropedGrade.indexOf(grade.campusGradeId) > -1" :data-search='classItem.className'>
             <div class="select-all">
               <span class="grade-name">{{ classItem.className }}</span>
-              <span
-                v-html="classSelectIcon(classItem)"
-                class="iconfont empty-icon"
-              ></span>
+              <span v-html="classSelectIcon(classItem)" class="iconfont empty-icon"></span>
             </div>
           </div>
         </div>
       </div>
       <!-- 本地数据搜索出来的结果 -->
       <div class="data-list " v-show="searchWord && showSearchList.length">
-        <div
-          class="select-all "
-          @click.stop="selectClass(item)"
-          v-for="(item, index) in showSearchList"
-          :key="index"
-        >
+        <div class="select-all " @click.stop="selectClass(item)" v-for="(item, index) in showSearchList" :key="index">
           <div class="name">
             <span>{{ item.className }}</span>
-            <span
-              v-html="classSelectIcon(item)"
-              class="iconfont empty-icon"
-            ></span>
+            <span v-html="classSelectIcon(item)" class="iconfont empty-icon"></span>
           </div>
         </div>
       </div>
@@ -153,6 +134,7 @@ export default {
       searchWord: '',
       selectedList: [],
       showSearchList: [],
+      eleStyle:"",
       dropedGrade: [] // 那些班级展开了
     }
   },
@@ -167,19 +149,22 @@ export default {
   },
   created() {
     this.getAllClass()
+          this.eleStyle = document.createElement("style")
+          document.head.appendChild(this.eleStyle)
   },
   watch: {
     searchWord(nv) {
-      if (nv === '') {
-        this.showSearchList = []
+          this.eleStyle.innerHTML = nv ? `[data-search]:not([data-search*="${nv}"]) { display: none; }` : '';
+    //   if (nv === '') {
+    //     this.showSearchList = []
 
-        return
-      }
-      // item.className.indexOf('') 返回所有的数据
-      const filterList = this.allClass.filter(item =>
-        item.className.includes(nv)
-      )
-      this.showSearchList = JSON.parse(JSON.stringify(filterList))
+    //     return
+    //   }
+    //   // item.className.indexOf('') 返回所有的数据
+    //   const filterList = this.allClass.filter(item =>
+    //     item.className.includes(nv)
+    //   )
+    //   this.showSearchList = JSON.parse(JSON.stringify(filterList))
     }
   },
   methods: {
@@ -259,6 +244,15 @@ export default {
 
 <style scoped lang="scss">
 .search-wrapper {
+  :placeholder-shown {
+    border: 1px red solid;
+  }
+  input:default + label::after {
+    content: "（推荐）";
+  }
+  p {
+    text-align: center;
+  }
   .content {
     width: 100%;
     height: 100%;
