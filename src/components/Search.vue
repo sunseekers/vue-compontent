@@ -1,56 +1,22 @@
 <template>
-  <!--前端列表搜索-->
+  <!--前端列表搜索 用css 属性选择器与搜索过滤实例页面-->
   <div class="search-wrapper">
-    <p>
-      <input type="radio" name="pay" id="pay0" value="0"> <label for="pay0">支付宝</label>
-    </p>
-    <p>
-      <input type="radio" name="pay" id="pay1" value="1" checked> <label for="pay1">微信</label>
-    </p>
-    <p>
-      <input type="radio" name="pay" id="pay2" value="2"> <label for="pay2">银行卡</label>
-    </p>
     <div class="search">
       <input v-model="searchWord" type="text" placeholder="搜索" />
       <span class="iconfont searcIcon">&#xe62b;</span>
     </div>
     <div class="content">
-      <!-- <div
-        v-if="!searchWord && showList.length"
-        class="select-all"
-        @click="selectAll"
-      > -->
       <div class="select-all" @click="selectAll">
         <span>全选</span>
         <span v-html="allSelectIcon" class="iconfont empty-icon"></span>
       </div>
       <div class="data-list">
-        <div class="grade" @click="dropGrade(grade)" v-for="(grade, index) in showList" :key="index">
-          <div class="select-all">
-            <span class="iconfont drop-icon" v-html="
-                dropedGrade.indexOf(grade.campusGradeId) > -1
-                  ? '&#xe63f;'
-                  : '&#xe6a1;'
-              "></span>
-            <span class="grade-name">{{ grade.campusGradeName }}</span>
-            <span @click.stop="selectGrade(grade)" v-html="gradeSelectIcon(grade)" class="iconfont empty-icon"></span>
-          </div>
-          <div @click.stop="selectClass(classItem)" class="item" v-for="(classItem, index2) in grade.classList" :key="index2" v-show="dropedGrade.indexOf(grade.campusGradeId) > -1" :data-search='classItem.className'>
+        <div class="grade" @click="selectCity(item)" v-for="(item, index) in showList" :key="index"  :data-search="item.city">
             <div class="select-all">
-              <span class="grade-name">{{ classItem.className }}</span>
-              <span v-html="classSelectIcon(classItem)" class="iconfont empty-icon"></span>
+              <span class="grade-name">{{ item.cityName }}</span>
+              <span v-html="classSelectIcon(item)" class="iconfont empty-icon"></span>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- 本地数据搜索出来的结果 -->
-      <div class="data-list " v-show="searchWord && showSearchList.length">
-        <div class="select-all " @click.stop="selectClass(item)" v-for="(item, index) in showSearchList" :key="index">
-          <div class="name">
-            <span>{{ item.className }}</span>
-            <span v-html="classSelectIcon(item)" class="iconfont empty-icon"></span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -64,67 +30,29 @@ export default {
       default: () => {
         return [
           {
-            campusGradeName: '一年级',
-            campusGradeId: 1,
-            classList: [
-              {
-                className: '一班',
-                classId: 1,
-                campusGradeId: 1
-              },
-              {
-                className: '二班',
-                classId: 2,
-                campusGradeId: 1
-              },
-              {
-                className: '三班',
-                classId: 3,
-                campusGradeId: 1
-              },
-              {
-                className: '四班',
-                classId: 4,
-                campusGradeId: 1
-              },
-              {
-                className: '五班',
-                classId: 5,
-                campusGradeId: 1
-              }
-            ]
+            city: '重庆市chongqing',
+            cityName: '重庆市'
           },
           {
-            campusGradeName: '二年级',
-            campusGradeId: 2,
-            classList: [
-              {
-                className: '一班',
-                classId: 6,
-                campusGradeId: 2
-              },
-              {
-                className: '二班',
-                classId: 7,
-                campusGradeId: 2
-              },
-              {
-                className: '三班',
-                classId: 8,
-                campusGradeId: 2
-              },
-              {
-                className: '四班',
-                classId: 9,
-                campusGradeId: 2
-              },
-              {
-                className: '五班',
-                classId: 10,
-                campusGradeId: 2
-              }
-            ]
-          }
+            city: '哈尔滨市haerbing',
+            cityName: '哈尔滨市'
+          },
+          {
+            city: '长春市changchun',
+            cityName: '长春市'
+          },
+          {
+            city: '长沙changsha',
+            cityName: '长沙',
+          },
+          {
+            city: '上海shanghai',
+            cityName: '上海'
+          },
+          {
+            city: '北京biejing',
+            cityName: '北京',
+          },
         ]
       }
     }
@@ -142,114 +70,46 @@ export default {
     allSelectIcon() {
       const bol =
         this.selectedList.length &&
-        this.selectedList.length === this.allClass.length
+        this.selectedList.length === this.showList.length
 
       return bol ? '&#xe6b2;' : '&#xe6b3;'
     }
   },
   created() {
-    this.getAllClass()
-          this.eleStyle = document.createElement("style")
-          document.head.appendChild(this.eleStyle)
+    this.eleStyle = document.createElement("style")
+    document.head.appendChild(this.eleStyle)
   },
   watch: {
     searchWord(nv) {
           this.eleStyle.innerHTML = nv ? `[data-search]:not([data-search*="${nv}"]) { display: none; }` : '';
-    //   if (nv === '') {
-    //     this.showSearchList = []
-
-    //     return
-    //   }
-    //   // item.className.indexOf('') 返回所有的数据
-    //   const filterList = this.allClass.filter(item =>
-    //     item.className.includes(nv)
-    //   )
-    //   this.showSearchList = JSON.parse(JSON.stringify(filterList))
     }
   },
   methods: {
-    getAllClass() {
-      this.allClass = this.showList
-        .map(item => {
-          return item.classList
-        })
-        .flat()
-    },
     // 选择所有
     selectAll() {
-      const bol = this.selectedList.length === this.allClass.length
+      const bol = this.selectedList.length === this.showList.length
       bol
         ? (this.selectedList = [])
-        : (this.selectedList = JSON.parse(JSON.stringify(this.allClass)))
+        : (this.selectedList = JSON.parse(JSON.stringify(this.showList)))
     },
-    // 展开年级
-    dropGrade(grade) {
-      const index = this.dropedGrade.findIndex(
-        item => item === grade.campusGradeId
-      )
-
-      index > -1
-        ? this.dropedGrade.splice(index, 1)
-        : this.dropedGrade.push(grade.campusGradeId)
+    selectCity(item) {
+      const index = this.selectedList.findIndex(ele=>item.cityName===ele.cityName)
+      index === -1 ?this.selectedList.push(item):this.selectedList.splice(index,1)
     },
-    gradeSelectIcon(grade) {
-      const length = this.selectedList.filter(
-        item => item.campusGradeId === grade.campusGradeId
-      ).length
-      return length > 0 ? '&#xe6b2;' : '&#xe6b3;'
-    },
-    classSelectIcon(classItem) {
+    classSelectIcon(item) {
       const bol = this.selectedList.findIndex(
-        item => item.classId === classItem.classId
+        ele => ele.cityName === item.cityName
       )
       return bol > -1 ? '&#xe6b2;' : '&#xe6b3;'
     },
-    // 选择班级
-    selectClass(classItem) {
-      const bol = this.selectedList.findIndex(
-        item => item.classId === classItem.classId
-      )
-      bol > -1
-        ? this.selectedList.splice(bol, 1)
-        : this.selectedList.push(classItem)
-    },
-    // 选择年级
-    selectGrade(grade) {
-      let exist = grade.classList.some(item => {
-        return (
-          this.selectedList.findIndex(el => item.classId === el.classId) !== -1
-        )
-      })
-      if (exist) {
-        // 取消全选
-        grade.classList.forEach(item => {
-          let index = this.selectedList.findIndex(
-            el => item.classId === el.classId
-          )
-          if (index > -1) {
-            this.selectedList.splice(index, 1)
-            console.log(index, 'index')
-          }
-        })
-      } else {
-        // 全选
-        grade.classList.forEach(item => {
-          this.selectedList.push(item)
-        })
-      }
-    }
+
+
   }
 }
 </script>
 
 <style scoped lang="scss">
 .search-wrapper {
-  :placeholder-shown {
-    border: 1px red solid;
-  }
-  input:default + label::after {
-    content: "（推荐）";
-  }
   p {
     text-align: center;
   }
