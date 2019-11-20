@@ -11,26 +11,26 @@ export default {
   data() {
     return {
       list: [
-        {
-          applicationTime: '899',
-          time: 'w'
-        },
-        {
-          applicationTime: '899',
-          time: '89w8'
-        },
-        {
-          applicationTime: '899',
-          time: '8w98'
-        },
-        {
-          applicationTime: '899',
-          time: '89w8'
-        },
-        {
-          applicationTime: '899',
-          time: '8w98'
-        }
+        // {
+        //   applicationTime: '899',
+        //   time: 'w'
+        // },
+        // {
+        //   applicationTime: '899',
+        //   time: '89w8'
+        // },
+        // {
+        //   applicationTime: '899',
+        //   time: '8w98'
+        // },
+        // {
+        //   applicationTime: '899',
+        //   time: '89w8'
+        // },
+        // {
+        //   applicationTime: '899',
+        //   time: '8w98'
+        // }
       ],
       param: {
         state: 0,
@@ -130,7 +130,7 @@ export default {
   overflow-y: scroll;
   height: 400px;
   -webkit-overflow-scrolling: touch;
-  border: 1px red solid;
+  // border: 1px red solid;
   .list-loading-status {
     text-align: center;
     color: #d9d9d9;

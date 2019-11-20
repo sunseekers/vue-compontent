@@ -1,10 +1,9 @@
 <template>
   <div class="wrapper">
-    <div>:default 伪类的默认使用</div>
+    <!-- <div>:default 伪类的默认使用</div> -->
     <!-- <p><input type="radio" name="pay" id="pay0" value="0" /> <label for="pay0">支付宝</label></p>
     <p><input type="radio" name="pay" id="pay1" value="1" checked /> <label for="pay1">微信</label></p>
     <p><input type="radio" name="pay" id="pay2" value="2" /> <label for="pay2">银行卡</label></p> -->
-
     <h4>标签的选择</h4>
     请选择你感兴趣的话题：<br />
     <input type="checkbox" id="topic1" /><label for="topic1" class="cs-topic">科技</label> <input type="checkbox" id="topic2" /><label for="topic2" class="cs-topic">体育</label> <input type="checkbox" id="topic3" /><label for="topic3" class="cs-topic">军事</label>
@@ -50,10 +49,13 @@ p {
   text-align: left;
 }
 input:default + label::after {
-  content: '（推荐）';
+  content: "（推荐）";
 }
-[type='checkbox'],
-[type='radio'] {
+h4 {
+  margin-top: 40px;
+}
+[type="checkbox"],
+[type="radio"] {
   position: absolute;
   clip: rect(0 0 0 0);
 }
@@ -103,7 +105,7 @@ body {
   width: 100%;
 }
 :checked + .cs-wallpaper::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -113,7 +115,7 @@ body {
   background: linear-gradient(-135deg, deepskyblue 14px, transparent 15px);
 }
 :checked + .cs-wallpaper::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 2px;
   top: 3px;

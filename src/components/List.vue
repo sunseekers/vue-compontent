@@ -1,22 +1,19 @@
 <template>
   <!--列表渲染-->
-  <div class="list">
-    <div
-      class="item "
-      v-for="(item, index) in list"
-      :key="`list${index}`"
-      @click="detail(item, index)"
-      :class="{ 'red-list': item.msgState === 1 }"
-    >
-      <div>
-        <span>申请时间:</span>
-        <span class="time">{{ item.applicationTime }}</span>
-      </div>
-      <div>
-        <span>补卡时间:</span>
-        <span class="time">{{ item.time }}</span>
+  <div class="list-wrapper">
+    <div class="list">
+      <div class="item" v-for="(item, index) in list" :key="`list${index}`" @click="detail(item, index)" :class="{ 'red-list': item.msgState === 1 }">
+        <div>
+          <span>申请时间:</span>
+          <span class="time">{{ item.applicationTime }}</span>
+        </div>
+        <div>
+          <span>补卡时间:</span>
+          <span class="time">{{ item.time }}</span>
+        </div>
       </div>
     </div>
+    <div class='empty'></div>
   </div>
 </template>
 
@@ -55,7 +52,7 @@ export default {
 <style scoped lang="scss">
 .list {
   .item {
-    border: 1px red solid;
+    // border: 1px red solid;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -77,6 +74,12 @@ export default {
       text-align: left;
       padding-top: 10px;
     }
+  }
+  &:empty + .empty::before {
+    display: inline-block;
+    padding-top: 40px;
+    content: "暂无数据";
+    color: #000;
   }
 }
 </style>
