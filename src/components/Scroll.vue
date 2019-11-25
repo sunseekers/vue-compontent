@@ -11,26 +11,26 @@ export default {
   data() {
     return {
       list: [
-        // {
-        //   applicationTime: '899',
-        //   time: 'w'
-        // },
-        // {
-        //   applicationTime: '899',
-        //   time: '89w8'
-        // },
-        // {
-        //   applicationTime: '899',
-        //   time: '8w98'
-        // },
-        // {
-        //   applicationTime: '899',
-        //   time: '89w8'
-        // },
-        // {
-        //   applicationTime: '899',
-        //   time: '8w98'
-        // }
+        {
+          applicationTime: '899',
+          time: 'w'
+        },
+        {
+          applicationTime: '899',
+          time: '89w8'
+        },
+        {
+          applicationTime: '899',
+          time: '8w98'
+        },
+        {
+          applicationTime: '899',
+          time: '89w8'
+        },
+        {
+          applicationTime: '899',
+          time: '8w98'
+        }
       ],
       param: {
         state: 0,
@@ -51,7 +51,7 @@ export default {
     // 获取数据
     getList() {
       if (this.param.page === 1) {
-        this.total = 20
+        this.total = 30
         this.param.page++
 
         // this.$api.Record.applyList(this.param).then(res => {
@@ -78,7 +78,7 @@ export default {
             },
             {
               applicationTime: '8939',
-              time: '8w98232'
+              time: '这么8w98232'
             }
           ]
           this.list = [...this.list, ...newList]
