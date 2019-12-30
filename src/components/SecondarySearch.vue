@@ -1,72 +1,62 @@
 <template>
   <div class="search-wrapper">
     <div class="search">
-      <input v-model="searchWord" type="text" placeholder="搜索" />
+      <input v-model="searchWord"
+             type="text"
+             placeholder="搜索" />
       <span class="iconfont searcIcon">&#xe62b;</span>
     </div>
     <div class="content">
-      <div
-        v-if="!searchWord && showList.length"
-        class="select-all"
-        @click="selectAll"
-      >
+      <div v-if="!searchWord && showList.length"
+           class="select-all"
+           @click="selectAll">
         <span>全选</span>
-        <span v-html="allSelectIcon" class="iconfont empty-icon"></span>
+        <span v-html="allSelectIcon"
+              class="iconfont empty-icon"></span>
       </div>
-      <div class="data-list" v-show="!searchWord && showList.length">
-        <div
-          class="grade"
-          @click="dropGrade(grade)"
-          v-for="(grade, index) in showList"
-          :key="index"
-        >
+      <div class="data-list"
+           v-show="!searchWord && showList.length">
+        <div class="grade"
+             @click="dropGrade(grade)"
+             v-for="(grade, index) in showList"
+             :key="index">
           <div class="select-all">
-            <span
-              class="iconfont drop-icon"
-              v-html="
+            <span class="iconfont drop-icon"
+                  v-html="
                 dropedGrade.indexOf(grade.campusGradeId) > -1
                   ? '&#xe63f;'
                   : '&#xe6a1;'
-              "
-            ></span>
+              "></span>
             <span class="grade-name">{{ grade.campusGradeName }}</span>
-            <span
-              @click.stop="selectGrade(grade)"
-              v-html="gradeSelectIcon(grade)"
-              class="iconfont empty-icon"
-            ></span>
+            <span @click.stop="selectGrade(grade)"
+                  v-html="gradeSelectIcon(grade)"
+                  class="iconfont empty-icon"></span>
           </div>
-          <div
-            @click.stop="selectClass(classItem)"
-            class="item"
-            v-for="(classItem, index2) in grade.classList"
-            :key="index2"
-            v-show="dropedGrade.indexOf(grade.campusGradeId) > -1"
-          >
-            <div class="select-all">
-              <span class="grade-name">{{ classItem.className }}</span>
-              <span
-                v-html="classSelectIcon(classItem)"
-                class="iconfont empty-icon"
-              ></span>
+          <div class="item"
+               :style="{ height: `${dropedGrade.indexOf(grade.campusGradeId) > -1 ? listItemHeight * grade.classList.length + 'px' : 0}` }">
+            <div @click.stop="selectClass(classItem)"
+                 v-for="(classItem, index2) in grade.classList"
+                 :key="index2">
+              <div class="select-all">
+                <span class="grade-name">{{ classItem.className }}</span>
+                <span v-html="classSelectIcon(classItem)"
+                      class="iconfont empty-icon"></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- 本地数据搜索出来的结果 -->
-      <div class="data-list " v-show="searchWord && showSearchList.length">
-        <div
-          class="select-all "
-          @click.stop="selectClass(item)"
-          v-for="(item, index) in showSearchList"
-          :key="index"
-        >
+      <div class="data-list "
+           v-show="searchWord && showSearchList.length">
+        <div class="select-all "
+             @click.stop="selectClass(item)"
+             v-for="(item, index) in showSearchList"
+             :key="index">
           <div class="name">
             <span>{{ item.className }}</span>
-            <span
-              v-html="classSelectIcon(item)"
-              class="iconfont empty-icon"
-            ></span>
+            <span v-html="classSelectIcon(item)"
+                  class="iconfont empty-icon"></span>
           </div>
         </div>
       </div>
@@ -152,6 +142,7 @@ export default {
       searchWord: '',
       selectedList: [],
       showSearchList: [],
+      listItemHeight:'',
       dropedGrade: [] // 那些班级展开了
     }
   },
@@ -165,6 +156,7 @@ export default {
   },
   created() {
     this.getAllClass()
+      this.getScreenWidth()
   },
   watch: {
     searchWord(nv) {
@@ -180,6 +172,13 @@ export default {
     }
   },
   methods: {
+    // 不同屏幕底下会有数值的差别，数据量一大，就会有问题
+    getScreenWidth(){
+    const screenWidth = window.screen.width
+    setTimeout(() => {
+      this.listItemHeight = screenWidth * 52 / 375
+    }, 50)
+    },
     getAllClass() {
       this.allClass = this.showList
         .map(item => {
@@ -306,6 +305,10 @@ export default {
       padding-bottom: 60px;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
+      .item {
+        transition: all 1s !important;
+        overflow: hidden;
+      }
       .grade {
         color: #000;
       }
