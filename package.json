@@ -12,6 +12,8 @@
     "node-sass": "^4.13.0",
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^8.0.0",
+    "video.js": "^7.6.6",
+    "videojs": "^1.0.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

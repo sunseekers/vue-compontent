@@ -12,7 +12,7 @@ for (let i = 0; i < 1000; i++) {
 export default {
   name: 'app',
   components: {
-    Search: () => import('@/components/Checked.vue')
+    Search: () => import('@/components/FileUpload.vue')
   },
   data() {
     return {
@@ -25,7 +25,7 @@ export default {
 <style scoped lang="scss">
 #app {
   height: 100%;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
