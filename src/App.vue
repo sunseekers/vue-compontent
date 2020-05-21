@@ -12,7 +12,7 @@ for (let i = 0; i < 1000; i++) {
 export default {
   name: 'app',
   components: {
-    Search: () => import('@/components/FileUpload.vue')
+    Search: () => import('@/components/Pop.vue')
   },
   data() {
     return {
